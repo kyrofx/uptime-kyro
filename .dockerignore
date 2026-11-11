@@ -26,7 +26,6 @@ CONTRIBUTING.md
 CNAME
 install.sh
 SECURITY.md
-tsconfig.json
 .env
 /tmp
 /ecosystem.config.js

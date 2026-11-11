@@ -1,9 +1,24 @@
+# Dokploy (Docker Compose) and local use.
+# Set AUTH_CLIENT_SECRET in the environment to turn on sign-in with Aegis.
 services:
-  uptime-kuma:
-    image: louislam/uptime-kuma:2
+  status:
+    build:
+      context: .
+      dockerfile: docker/dockerfile
+      target: release
     restart: unless-stopped
     volumes:
-      - ./data:/app/data
-    ports:
-      # <Host Port>:<Container Port>
-      - "3001:3001"
+      - status-data:/app/data
+    # Dokploy routes the domain to this port through Traefik. Use `ports` instead to publish it on the host.
+    expose:
+      - "3001"
+    environment:
+      AUTH_ISSUER: ${AUTH_ISSUER:-https://auth.kyro.dog}
+      AUTH_CLIENT_ID: ${AUTH_CLIENT_ID:-tVseuD7pEWy7bJRHOtY83HSeAZLxlf2q}
+      AUTH_CLIENT_SECRET: ${AUTH_CLIENT_SECRET:?Set AUTH_CLIENT_SECRET}
+      AUTH_REDIRECT_URI: ${AUTH_REDIRECT_URI:-https://status.kyro.cat/api/auth/callback}
+      AUTH_ALLOWED_USERS: ${AUTH_ALLOWED_USERS:-}
+      UPTIME_KUMA_AUTH_SECRET: ${UPTIME_KUMA_AUTH_SECRET:-}
+
+volumes:
+  status-data:
