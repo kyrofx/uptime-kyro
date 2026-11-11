@@ -40,6 +40,7 @@ COPY --chown=node:node --from=build_frontend /app/dist /app/dist
 USER root
 RUN npm run precompile-server && \
     find server src -name '*.ts' -delete && \
+    find src -mindepth 1 -maxdepth 1 ! -name util.js -exec rm -rf {} + && \
     rm -rf node_modules/tsx node_modules/esbuild node_modules/@esbuild
 USER node
 COPY --chown=node:node --from=build_healthcheck /app/extra/healthcheck /app/extra/healthcheck

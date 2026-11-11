@@ -40,15 +40,12 @@ SECURITY.md
 /PLAN.md
 /.ws-context
 /compose.yaml
-/index.html
-/vite.config.mjs
 /playwright.config.js
+
+# index.html, vite.config.mjs and src/ are needed to build the frontend; the image keeps only src/util.js
 /.prettierrc.js
 /.prettierignore
 
-# Only src/util.ts is used by the server at runtime
-/src/*
-!/src/util.ts
 
 # Comment the following line if you want to rebuild the healthcheck binary
 /extra/healthcheck-armv7
